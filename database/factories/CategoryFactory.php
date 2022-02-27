@@ -2,10 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class TransactionFactory extends Factory
+class CategoryFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -15,10 +14,7 @@ class TransactionFactory extends Factory
     public function definition()
     {
         return [
-            'description' => $this->faker->sentence(2),
-            'category_id' => function () {
-                return Category::factory()->create()->id;
-            },
+            'name' => $this->faker->word(),
         ];
     }
 }
