@@ -12,7 +12,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (@transactions as $transaction)
+                @foreach ($transactions as $transaction)
                     <tr>
                         <td>{{ $transaction->created_at->format('m/d/Y') }}</td>
                         <td>{{ $transaction->description }}</td>
