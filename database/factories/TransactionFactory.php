@@ -19,6 +19,7 @@ class TransactionFactory extends Factory
             'category_id' => function () {
                 return Category::factory()->create()->id;
             },
+            'amount' => $this->faker->numberBetween(5, 10),
         ];
     }
 }
