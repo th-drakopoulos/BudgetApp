@@ -7,15 +7,16 @@ use App\Models\Transaction;
 
 class TransactionsController extends Controller
 {
-    public function index(Category $category = null)
+    public function index(Category $category)
     {
-
-        if ($category !== null) {
-            $transactions = Transaction::where('category_id', $category->id)->get();
-        } else {
-            $transactions = Transaction::all();
-        }
+        $transactions = Transaction::byCategory($category)->get();
 
         return view('transactions.index', compact('transactions'));
+    }
+
+    public function store()
+    {
+        Transaction::create(request()->all());
+        return redirect('/transactions');
     }
 }
