@@ -22,4 +22,51 @@ class CreateTransactionsTest extends TestCase
 
         $this->get('/transactions')->assertSee($transaction->description);
     }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function it_cannot_create_transactions_without_a_description()
+    {
+        $this->postTransaction(['description' => null])->assertSessionHasErrors('description');
+    }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function it_cannot_create_transactions_without_a_category()
+    {
+        $this->postTransaction(['category_id' => null])->assertSessionHasErrors('category_id');
+    }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function it_cannot_create_transactions_without_an_amount()
+    {
+        $this->postTransaction(['amount' => null])->assertSessionHasErrors('amount');
+    }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function it_cannot_create_transactions_without_a_valid_amount()
+    {
+        $this->postTransaction(['amount' => 'abc'])->assertSessionHasErrors('amount');
+    }
+
+    public function postTransaction($overrides = [])
+    {
+        $transaction = Transaction::factory()->make($overrides);
+        return $this->withExceptionHandling()->post('/transactions', $transaction->toArray());
+    }
+
 }
