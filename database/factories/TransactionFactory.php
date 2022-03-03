@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Category;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TransactionFactory extends Factory
@@ -20,6 +21,9 @@ class TransactionFactory extends Factory
                 return Category::factory()->create()->id;
             },
             'amount' => $this->faker->numberBetween(5, 10),
+            'user_id' => function () {
+                return User::factory()->create()->id;
+            },
         ];
     }
 }

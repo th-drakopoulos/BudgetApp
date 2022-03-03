@@ -8,7 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Transaction extends Model
 {
     use HasFactory;
-    protected $fillable = ['description', 'category_id', 'amount'];
+    protected $fillable = ['description', 'category_id', 'amount', 'user_id'];
+
+    public static function boot()
+    {
+        parent::boot();
+        static::addGlobalScope('user', function ($query) {
+            $query->where('user_id', auth()->id());
+        });
+    }
 
     public function category()
     {
