@@ -14,7 +14,7 @@ class TransactionsController extends Controller
 
     public function index(Category $category)
     {
-        $transactions = Transaction::byCategory($category)->get();
+        $transactions = Transaction::byCategory($category)->paginate();
 
         return view('transactions.index', compact('transactions'));
     }
@@ -51,6 +51,12 @@ class TransactionsController extends Controller
             'amount' => 'required|numeric',
         ]);
         $transaction->update(request()->all());
+        return redirect('/transactions');
+    }
+
+    public function destroy(Transaction $transaction)
+    {
+        $transaction->delete();
         return redirect('/transactions');
     }
 }
