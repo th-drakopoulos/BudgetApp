@@ -7,11 +7,12 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="card-title">
-                            <h4>Create Transaction</h4>
+                            <h4>Update Transaction</h4>
                         </div>
                         <div class="card-text">
-                            <form action="/transactions" method="POST">
-                                @include('transactions.form')
+                            <form action="/transactions/{{ $transaction->id }}" method="POST">
+                                {{ method_field('PUT') }}
+                                @include('transactions.form', ['buttonText' => 'Update'])
                             </form>
                         </div>
                     </div>
