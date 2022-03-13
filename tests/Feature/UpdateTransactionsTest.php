@@ -31,4 +31,58 @@ class UpdateTransactionsTest extends TestCase
 
         $this->get('/transactions')->assertSee($newTransaction->description);
     }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function it_cannot_update_transactions_without_a_description()
+    {
+        $this->updateTransaction(['description' => null])->assertSessionHasErrors('description');
+    }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function it_cannot_update_transactions_without_a_category()
+    {
+        $this->updateTransaction(['category_id' => null])->assertSessionHasErrors('category_id');
+    }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function it_cannot_update_transactions_without_an_amount()
+    {
+        $this->updateTransaction(['amount' => null])->assertSessionHasErrors('amount');
+    }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function it_cannot_update_transactions_without_a_valid_amount()
+    {
+        $this->updateTransaction(['amount' => 'abc'])->assertSessionHasErrors('amount');
+    }
+
+    public function updateTransaction($overrides = [])
+    {
+        $transaction = Transaction::factory()->create(
+            [
+                'user_id' => $this->user->id,
+            ]
+        );
+        $newTransaction = Transaction::factory()->make(
+            array_merge(['user_id' => $this->user->id], $overrides)
+        );
+        return $this->withExceptionHandling()->put("/transactions/{$transaction->id}", $newTransaction->toArray());
+
+    }
 }
