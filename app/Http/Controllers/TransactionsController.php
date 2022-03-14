@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Transaction;
+use Carbon\Carbon;
 
 class TransactionsController extends Controller
 {
@@ -14,9 +15,18 @@ class TransactionsController extends Controller
 
     public function index(Category $category)
     {
-        $transactions = Transaction::byCategory($category)->paginate();
+        $currentMonth = request('month') ?: Carbon::now()->format('M');
+        $transactionsQuery = Transaction::byCategory($category);
 
-        return view('transactions.index', compact('transactions'));
+        if (request()->has('month')) {
+            $transactionsQuery->byMonth(request('month'));
+        } else {
+            $transactionsQuery->byMonth();
+        }
+
+        $transactions = $transactionsQuery->paginate();
+
+        return view('transactions.index', compact('transactions', 'currentMonth'));
     }
 
     public function create()

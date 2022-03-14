@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Category;
 use App\Models\Transaction;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 
@@ -78,5 +79,49 @@ class ViewTransactionsTest extends TestCase
         $otherTransaction = Transaction::factory()->create();
 
         $this->get('/transactions/' . $category->slug)->assertSee($transaction->description)->assertDontSee($otherTransaction->description);
+    }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function it_can_filter_transactions_by_month()
+    {
+        $currentTransaction = Transaction::factory()->create(
+            [
+                'user_id' => $this->user->id,
+            ]
+        );
+        $pastTransaction = Transaction::factory()->create([
+            'user_id' => $this->user->id,
+            'created_at' => Carbon::now()->subMonth(2),
+        ]);
+
+        $this->get('/transactions?month=' . Carbon::now()->subMonth(2)->format('M'))
+            ->assertSee($pastTransaction->description)
+            ->assertDontSee($currentTransaction->description);
+    }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function it_can_filter_transactions_by_current_month_by_default()
+    {
+        $currentTransaction = Transaction::factory()->create(
+            [
+                'user_id' => $this->user->id,
+            ]
+        );
+        $pastTransaction = Transaction::factory()->create([
+            'user_id' => $this->user->id,
+            'created_at' => Carbon::now()->subMonth(2),
+        ]);
+
+        $this->get('/transactions')
+            ->assertSee($currentTransaction->description)
+            ->assertDontSee($pastTransaction->description);
     }
 }

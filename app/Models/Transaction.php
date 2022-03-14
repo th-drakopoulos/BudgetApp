@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -32,5 +33,11 @@ class Transaction extends Model
         if ($category->exists) {
             $query->where('category_id', $category->id);
         }
+    }
+
+    public function scopeByMonth($quest, $month = 'this month')
+    {
+        $quest->where('created_at', '>=', Carbon::parse("first day of {$month}"))
+            ->where('created_at', '<=', Carbon::parse("last day of {$month}"));
     }
 }
