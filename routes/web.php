@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\TransactionsController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +25,8 @@ Route::get('/transactions/{transaction}', [TransactionsController::class, 'edit'
 Route::post('/transactions', [TransactionsController::class, 'store']);
 Route::put('/transactions/{transaction}', [TransactionsController::class, 'update']);
 Route::delete('/transactions/{transaction}', [TransactionsController::class, 'destroy']);
+
+Route::get('/categories', [CategoriesController::class, 'index']);
 
 Auth::routes();
 
