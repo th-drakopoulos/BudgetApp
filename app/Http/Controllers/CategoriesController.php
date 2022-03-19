@@ -16,4 +16,10 @@ class CategoriesController extends Controller
         $categories = Category::paginate();
         return view('categories.index', compact('categories'));
     }
+
+    public function store()
+    {
+        Category::create(request()->all());
+        return redirect('/categories');
+    }
 }

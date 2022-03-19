@@ -30,7 +30,7 @@ class ViewCategoriesTest extends TestCase
      *
      * @return void
      */
-    public function it_allows_only_authenticated_users()
+    public function it_allows_only_authenticated_users_to_the_categories_list()
     {
         $this->signOut()->withExceptionHandling()->get('/transactions')->assertRedirect('/login');
     }
