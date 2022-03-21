@@ -30,10 +30,16 @@ class ViewTransactionsTest extends TestCase
      */
     public function it_only_displays_transactions_that_belong_to_the_currently_logged_in_user()
     {
+        $category = Category::factory()->create(
+            [
+                'user_id' => $this->user->id,
+            ]
+        );
         $otherUser = User::factory()->create();
         $transaction = Transaction::factory()->create(
             [
                 'user_id' => $this->user->id,
+                'category_id' => $category->id,
             ]
         );
         $otherTransaction = Transaction::factory()->create(
@@ -53,9 +59,15 @@ class ViewTransactionsTest extends TestCase
      */
     public function it_can_display_all_transactions()
     {
+        $category = Category::factory()->create(
+            [
+                'user_id' => $this->user->id,
+            ]
+        );
         $transaction = Transaction::factory()->create(
             [
                 'user_id' => $this->user->id,
+                'category_id' => $category->id,
             ]
         );
 
@@ -69,7 +81,11 @@ class ViewTransactionsTest extends TestCase
      */
     public function it_can_filter_transactions_by_category()
     {
-        $category = Category::factory()->create();
+        $category = Category::factory()->create(
+            [
+                'user_id' => $this->user->id,
+            ]
+        );
         $transaction = Transaction::factory()->create(
             [
                 'category_id' => $category->id,
@@ -88,6 +104,11 @@ class ViewTransactionsTest extends TestCase
      */
     public function it_can_filter_transactions_by_month()
     {
+        $category = Category::factory()->create(
+            [
+                'user_id' => $this->user->id,
+            ]
+        );
         $currentTransaction = Transaction::factory()->create(
             [
                 'user_id' => $this->user->id,
@@ -95,6 +116,7 @@ class ViewTransactionsTest extends TestCase
         );
         $pastTransaction = Transaction::factory()->create([
             'user_id' => $this->user->id,
+            'category_id' => $category->id,
             'created_at' => Carbon::now()->subMonth(2),
         ]);
 
@@ -110,9 +132,15 @@ class ViewTransactionsTest extends TestCase
      */
     public function it_can_filter_transactions_by_current_month_by_default()
     {
+        $category = Category::factory()->create(
+            [
+                'user_id' => $this->user->id,
+            ]
+        );
         $currentTransaction = Transaction::factory()->create(
             [
                 'user_id' => $this->user->id,
+                'category_id' => $category->id,
             ]
         );
         $pastTransaction = Transaction::factory()->create([

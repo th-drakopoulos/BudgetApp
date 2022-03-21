@@ -21,6 +21,10 @@ class Category extends Model
             $category->user_id = $category->user_id ?: auth()->id();
             $category->slug = $category->slug ?: Str::slug($category->name);
         });
+
+        static::updating(function ($category) {
+            $category->slug = Str::slug($category->name);
+        });
     }
 
     public function getRouteKeyName()
