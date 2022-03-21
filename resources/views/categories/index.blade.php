@@ -20,7 +20,7 @@
                                     <tr>
                                         <td>{{ $category->created_at->format('m/d/Y') }}</td>
                                         <td>
-                                            <a href="/categories/{{ $category->id }}">
+                                            <a href="/categories/{{ $category->slug }}">
                                                 {{ $category->name }}
                                             </a>
                                         </td>
