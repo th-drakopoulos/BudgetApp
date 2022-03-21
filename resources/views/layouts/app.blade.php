@@ -46,14 +46,25 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-                        <li><a href="/transactions" class="nav-link">All Transactions</a></li>
-                        <li class="ms-3"><a href="/transactions/create" class="nav-link">New
-                                Transaction</a></li>
+                        <li class="ms-3 nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button"
+                                aria-expanded="false">Transactions <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="/transactions" class="nav-link">All Transactions</a></li>
+                                <li class="dropdown-divider"></li>
+                                <li><a href="/transactions/create" class="nav-link">New
+                                        Transaction</a></li>
+                            </ul>
+                        </li>
                         <li class="ms-3 nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button"
                                 aria-expanded="false">Categories <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
+                                <li><a href="/categories" class="nav-link">Manage Categories</a></li>
+                                <li><a href="/categories/create" class="nav-link">New Category</a></li>
+                                <li class="dropdown-divider"></li>
                                 @foreach (\App\Models\Category::all() as $category)
                                     <li class="dropdown-item"><a
                                             href="/transactions/{{ $category->slug }}">{{ $category->name }}</a>
@@ -88,7 +99,7 @@
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
-                                                                                                                                                         document.getElementById('logout-form').submit();">
+                                                                                                                                                                                                     document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 

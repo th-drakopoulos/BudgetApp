@@ -19,15 +19,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/transactions/create', [TransactionsController::class, 'create']);
+Route::resource('/transactions', TransactionsController::class)->except('show');
 Route::get('/transactions/{category?}', [TransactionsController::class, 'index']);
-Route::get('/transactions/{transaction}', [TransactionsController::class, 'edit']);
-Route::post('/transactions', [TransactionsController::class, 'store']);
-Route::put('/transactions/{transaction}', [TransactionsController::class, 'update']);
-Route::delete('/transactions/{transaction}', [TransactionsController::class, 'destroy']);
 
-Route::get('/categories', [CategoriesController::class, 'index']);
-Route::post('/categories', [CategoriesController::class, 'store']);
+Route::resource('/categories', CategoriesController::class);
 
 Auth::routes();
 

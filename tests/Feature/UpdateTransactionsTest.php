@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Category;
 use App\Models\Transaction;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
@@ -16,6 +17,11 @@ class UpdateTransactionsTest extends TestCase
      */
     public function it_can_update_transactions()
     {
+        $category = Category::factory()->create(
+            [
+                'user_id' => $this->user->id,
+            ]
+        );
         $transaction = Transaction::factory()->create(
             [
                 'user_id' => $this->user->id,
@@ -24,6 +30,7 @@ class UpdateTransactionsTest extends TestCase
         $newTransaction = Transaction::factory()->make(
             [
                 'user_id' => $this->user->id,
+                'category_id' => $category->id,
             ]
         );
 

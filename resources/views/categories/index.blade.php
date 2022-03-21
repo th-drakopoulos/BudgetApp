@@ -20,13 +20,13 @@
                                     <tr>
                                         <td>{{ $category->created_at->format('m/d/Y') }}</td>
                                         <td>
-                                            <a href="/categories/{{ $category->id }}">
+                                            <a href="/categories/{{ $category->slug }}">
                                                 {{ $category->name }}
                                             </a>
                                         </td>
                                         <td>{{ $category->slug }}</td>
                                         <td>
-                                            <form action="/categories/{{ $category->id }}" method="POST">
+                                            <form action="/categories/{{ $category->slug }}" method="POST">
                                                 {{ method_field('DELETE') }}
                                                 {{ csrf_field() }}
                                                 <button class="btn btn-danger btn-sm" type="submit">Remove</button>
