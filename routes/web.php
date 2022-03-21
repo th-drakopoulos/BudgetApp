@@ -29,6 +29,8 @@ Route::delete('/transactions/{transaction}', [TransactionsController::class, 'de
 Route::get('/categories', [CategoriesController::class, 'index']);
 Route::post('/categories', [CategoriesController::class, 'store']);
 Route::get('/categories/create', [CategoriesController::class, 'create']);
+Route::put('/categories/{category}', [CategoriesController::class, 'update']);
+Route::get('/categories/{category}', [CategoriesController::class, 'edit']);
 
 Auth::routes();
 
