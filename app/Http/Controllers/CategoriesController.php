@@ -45,4 +45,10 @@ class CategoriesController extends Controller
     {
         return view('categories.edit', compact('category'));
     }
+
+    public function destroy(Category $category)
+    {
+        $category->delete();
+        return redirect('/categories');
+    }
 }

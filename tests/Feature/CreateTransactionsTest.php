@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Category;
 use App\Models\Transaction;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
@@ -16,9 +17,15 @@ class CreateTransactionsTest extends TestCase
      */
     public function it_can_create_transactions()
     {
+        $category = Category::factory()->create(
+            [
+                'user_id' => $this->user->id,
+            ]
+        );
         $transaction = Transaction::factory()->make(
             [
                 'user_id' => $this->user->id,
+                'category_id' => $category->id,
             ]
         );
 

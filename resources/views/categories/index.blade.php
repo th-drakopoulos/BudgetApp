@@ -26,7 +26,7 @@
                                         </td>
                                         <td>{{ $category->slug }}</td>
                                         <td>
-                                            <form action="/categories/{{ $category->id }}" method="POST">
+                                            <form action="/categories/{{ $category->slug }}" method="POST">
                                                 {{ method_field('DELETE') }}
                                                 {{ csrf_field() }}
                                                 <button class="btn btn-danger btn-sm" type="submit">Remove</button>
