@@ -31,4 +31,9 @@ class Category extends Model
     {
         return 'slug';
     }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class, 'category_id');
+    }
 }

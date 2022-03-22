@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BudgetsController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\TransactionsController;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +24,8 @@ Route::resource('/transactions', TransactionsController::class)->except('show');
 Route::get('/transactions/{category?}', [TransactionsController::class, 'index']);
 
 Route::resource('/categories', CategoriesController::class);
+
+Route::resource('/budgets', BudgetsController::class);
 
 Auth::routes();
 
