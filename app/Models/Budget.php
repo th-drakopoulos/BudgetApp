@@ -10,6 +10,20 @@ class Budget extends Model
 {
     use HasFactory;
 
+    public $fillable = ['category_id', 'amount', 'budget_date'];
+
+    public static function boot()
+    {
+        parent::boot();
+        static::addGlobalScope('user', function ($query) {
+            $query->where('user_id', auth()->id());
+        });
+
+        static::saving(function ($budget) {
+            $budget->user_id = $budget->user_id ?: auth()->id();
+        });
+    }
+
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id');
