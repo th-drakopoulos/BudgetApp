@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 class BudgetsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -38,12 +43,17 @@ class BudgetsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
-        //
+        $this->validate(request(), [
+            'category_id' => 'required',
+            'amount' => 'required',
+            'budget_date' => 'required',
+        ]);
+        Budget::create(request()->all());
+        return redirect('/budgets');
     }
 
     /**
@@ -64,9 +74,15 @@ class BudgetsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Budget $budget)
     {
-        //
+        $this->validate(request(), [
+            'category_id' => 'required',
+            'amount' => 'required',
+            'budget_date' => 'required',
+        ]);
+        $budget->update(request()->all());
+        return redirect('/budgets');
     }
 
     /**
@@ -75,8 +91,9 @@ class BudgetsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Budget $budget)
     {
-        //
+        $budget->delete();
+        return redirect('/budgets');
     }
 }
