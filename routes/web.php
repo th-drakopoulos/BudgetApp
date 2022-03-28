@@ -20,8 +20,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('/transactions', TransactionsController::class)->except('show');
 Route::get('/transactions/{category?}', [TransactionsController::class, 'index']);
+Route::resource('/transactions', TransactionsController::class)->except('show');
 
 Route::resource('/categories', CategoriesController::class);
 

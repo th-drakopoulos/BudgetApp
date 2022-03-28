@@ -16,11 +16,12 @@ class Budget extends Model
     {
         parent::boot();
         static::addGlobalScope('user', function ($query) {
-            $query->where('user_id', auth()->id());
+            $query->where('user_id', auth()->id())->with('category.transactions');
         });
 
         static::saving(function ($budget) {
             $budget->user_id = $budget->user_id ?: auth()->id();
+            $budget->budget_date = Carbon::parse($budget->budget_date)->toDateTimeString();
         });
     }
 
@@ -32,6 +33,11 @@ class Budget extends Model
     public function balance()
     {
         return $this->amount - $this->category->transactions->sum('amount');
+    }
+
+    public function getMonth()
+    {
+        return isset($this->budget_date) ? Carbon::parse($this->budget_date)->format('M') : null;
     }
 
     public function scopeByMonth($quest, $month = 'this month')
