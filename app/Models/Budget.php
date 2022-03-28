@@ -16,7 +16,7 @@ class Budget extends Model
     {
         parent::boot();
         static::addGlobalScope('user', function ($query) {
-            $query->where('user_id', auth()->id());
+            $query->where('user_id', auth()->id())->with('category.transactions');
         });
 
         static::saving(function ($budget) {
