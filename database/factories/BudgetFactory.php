@@ -24,7 +24,7 @@ class BudgetFactory extends Factory
                 return User::factory()->create()->id;
             },
             'amount' => $this->faker->randomFloat(2, 500, 1000),
-            'budget_date' => Carbon::now(),
+            'budget_date' => Carbon::now()->format('M'),
         ];
     }
 }
